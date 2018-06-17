@@ -98,12 +98,12 @@ Payload就是代表这个请求的字符串, 通过组合HTTP方法, 请求地�
       <td>
         <pre>
           <code>
-          {
-            "code": "ethbtc", 
-            "name": "ETH/BTC", 
-            "base_unit": "eth", 
-            "quote_unit": "btc"
-          }
+{
+  "code": "ethbtc", 
+  "name": "ETH/BTC", 
+  "base_unit": "eth", 
+  "quote_unit": "btc"
+}
           </code>
         </pre>
       </td>
@@ -116,11 +116,11 @@ Payload就是代表这个请求的字符串, 通过组合HTTP方法, 请求地�
       <td>
         <pre>
           <code>
-          {
-            "currency":"btc",
-            "balance":"1.30",
-            "locked":"0.0"
-          }
+{
+  "currency":"btc",
+  "balance":"1.30",
+  "locked":"0.0"
+}
           </code>
         </pre>
       </td>
@@ -136,18 +136,18 @@ Payload就是代表这个请求的字符串, 通过组合HTTP方法, 请求地�
       <td>
         <pre>
           <code>
-            {
-              "id":7,
-              "side":"sell",
-              "price":"40100.0",
-              "avg_price":"40100",
-              "state":"wait",
-              "market":"btccny",
-              "created_at":"2018-06-18T02:02:33Z",
-              "volume":"100.0",
-              "remaining_volume":"89.8",
-              "executed_volume":"10.2",
-            }
+{
+  "id":7,
+  "side":"sell",
+  "price":"40100.0",
+  "avg_price":"40100",
+  "state":"wait",
+  "market":"btccny",
+  "created_at":"2018-06-18T02:02:33Z",
+  "volume":"100.0",
+  "remaining_volume":"89.8",
+  "executed_volume":"10.2",
+}
           </code>
         </pre>
       </td>
@@ -179,15 +179,15 @@ Payload就是代表这个请求的字符串, 通过组合HTTP方法, 请求地�
       <td>
         <pre>
           <code>
-            {
-              "market_code":"ethcny",
-              "low":"3000.0",
-              "high":"3000.0",
-              "last":"3000.0",
-              "volume":"0.11",
-              "open":"3000.0",
-              "timestamp":1398410899
-            }
+{
+  "market_code":"ethcny",
+  "low":"3000.0",
+  "high":"3000.0",
+  "last":"3000.0",
+  "volume":"0.11",
+  "open":"3000.0",
+  "timestamp":1398410899
+}
           </code>
         </pre>
       </td>
@@ -205,14 +205,7 @@ Payload就是代表这个请求的字符串, 通过组合HTTP方法, 请求地�
   <code>
   curl -X POST 'https://api.ocx.com/api/v2/orders' -d 'access\_key=your\_access\_key&tonce=1234567&signature=computed\_signature&market=btccny&price=40000&side=buy&volume=1' 
   </code>
-</pre>  
-
-同时创建多个委托: 
-<pre>
-  <code>
-  curl -X POST 'https://api.ocx.com/api/v2/orders/multi' -d 'access\_key=your\_access\_key&tonce=123456789&signature=computed\_signature&market=btccny&orders\[\]\[price\]=40000&orders\[\]\[side\]=sell&orders\[\]\[volume\]=0.5&orders\[\]\[price\]=39999&orders\[\]\[side\]=sell&orders\[\]\[volume\]=0.99'
-  </code>
-</pre>  
+</pre> 
 
 
 ### 注意事项
@@ -238,3 +231,144 @@ Payload就是代表这个请求的字符串, 通过组合HTTP方法, 请求地�
 ### API列表
 
 以下是详细的API列表，所有需要access_key/tonce/signature的都是Private API, 其他的则是Public API。
+
+1. GET /api/v2/tickers    获取OCX行情
+
+URL `https://api.ocx.com/api/v2/tickers`
+
+示例
+```
+# Request
+GET https://api.ocx.com/api/v2/tickers
+# Response
+data: [
+  {
+    "market_code":"ethbtc",
+		"open":"0.07",
+		"high":"0.078",
+		"last":"0.076",
+		"low":"0.069",
+		"timestamp": 1398410899,
+		"volume":"1232.83"
+	}
+]
+```
+
+2. GET /api/v2/markets  获取可交易市场
+
+URL `https://api.ocx.com/api/v2/markets`
+
+示例
+```
+# Request
+GET https://api.ocx.com/api/v2/markets
+# Response
+data: [
+  {
+    "code":"ethbtc",
+		"name":"ETH/BTC",
+		"base_unit":"eth",
+		"quote_unt":"btc"
+	}
+]
+```
+
+3. GET /api/v2/depth  获取市场深度
+
+URL `https://api.ocx.com/api/v2/depth`
+
+示例
+```
+# Request
+GET https://api.ocx.com/api/v2/depth?market=ethbtc
+# Response
+data: {
+  timestamp: 1398410899,
+  asks: [],
+  bids: []
+}
+```
+
+4. GET /api/v2/orders  获取个人订单
+
+URL `https://api.ocx.com/api/v2/orders`
+
+示例
+```
+# Request
+GET https://api.ocx.com/api/v2/orders
+# Response
+data: [
+  {
+    "id":7,
+    "side":"sell",
+    "price":"40100.0",
+    "avg_price":"40100",
+    "state":"wait",
+    "market":"btccny",
+    "created_at":"2018-06-18T02:02:33Z",
+    "volume":"100.0",
+    "remaining_volume":"89.8",
+    "executed_volume":"10.2",
+  }
+]
+```
+
+5. GET /api/v2/orders/:id 获取订单详情
+
+URL `https://api.ocx.com/api/v2/orders/:id`
+
+示例
+```
+# Request
+GET https://api.ocx.com/api/v2/orders/7
+# Response
+data: {
+  "id":7,
+  "side":"sell",
+  "price":"40100.0",
+  "avg_price":"40100",
+  "state":"wait",
+  "market":"btccny",
+  "created_at":"2018-06-18T02:02:33Z",
+  "volume":"100.0",
+  "remaining_volume":"89.8",
+  "executed_volume":"10.2",
+}
+```
+
+6. POST /api/v2/orders 下单
+
+URL `https://api.ocx.com/api/v2/orders`
+
+示例
+```
+# Request
+POST https://api.ocx.com/api/v2/orders/
+# Response
+{"result":true,"order_id":123456}
+```
+
+7. POST /api/v2/orders/cancel 撤单
+
+URL `https://api.ocx.com/api/v2/orders/cancel`
+
+示例
+```
+# Request
+POST https://api.ocx.com/api/v2/orders/cancel
+# Response
+{"result":true,"order_id":123456}
+```
+
+8. POST /api/v2/orders/clear 批量撤单
+
+URL `https://api.ocx.com/api/v2/orders/clear`
+
+示例
+```
+# Request
+POST https://api.ocx.com/api/v2/orders/clear
+# Response
+{"result":true}
+```
