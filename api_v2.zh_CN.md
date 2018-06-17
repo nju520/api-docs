@@ -1,6 +1,7 @@
 ## OCX开发者接口 (API version 2) 
 
   接口URI前缀: /api/v2 
+
   返回结果格式: JSON
 
 ### Public/Private API
@@ -96,7 +97,14 @@ Payload就是代表这个请求的字符串, 通过组合HTTP方法, 请求地�
       <td>Market</td>
       <td>
         <pre>
-          <code>{"code": "ethbtc", "name": "ETH/BTC", "base_unit": "eth", "quote_unit": "btc"}</code>
+          <code>
+          {
+            "code": "ethbtc", 
+            "name": "ETH/BTC", 
+            "base_unit": "eth", 
+            "quote_unit": "btc"
+          }
+          </code>
         </pre>
       </td>
       <td>
@@ -106,16 +114,42 @@ Payload就是代表这个请求的字符串, 通过组合HTTP方法, 请求地�
     <tr>
       <td>Account</td>
       <td>
-        <pre><code>{"currency":"btc","balance":"1.30","locked":"0.0"}</code></pre>
+        <pre>
+          <code>
+          {
+            "currency":"btc",
+            "balance":"1.30",
+            "locked":"0.0"
+          }
+          </code>
+        </pre>
       </td>
       <td>
-        <p>Account包含了用户某一个币种账户的信息:</p><p>currency: 账户的币种, 如btc</p><p>balance: 账户余额, 不包括冻结资金</p><p>locked: 冻结资金</p>
+        <p>Account包含了用户某一个币种账户的信息:</p>
+        <p>currency: 账户的币种, 如btc</p>
+        <p>balance: 账户余额, 不包括冻结资金</p>
+        <p>locked: 冻结资金</p>
       </td>
     </tr>
     <tr>
       <td>Order</td>
       <td>
-        <pre><code>{"id":7,"side":"sell","price":"3100.0","avg_price":"3101.2","state":"wait","market":"btccny","created_at":"2014-04-18T02:02:33Z","volume":"100.0","remaining_volume":"89.8","executed_volume":"10.2","trades_count": 1, "trades":[{"id":2,"price":"3100.0","volume":"10.2","market":"btccny","created_at":"2014-04-18T02:04:49Z","side":"sell"}]}</code></pre>
+        <pre>
+          <code>
+            {
+              "id":7,
+              "side":"sell",
+              "price":"40100.0",
+              "avg_price":"40100",
+              "state":"wait",
+              "market":"btccny",
+              "created_at":"2018-06-18T02:02:33Z",
+              "volume":"100.0",
+              "remaining_volume":"89.8",
+              "executed_volume":"10.2",
+            }
+          </code>
+        </pre>
       </td>
       <td>
         <p>Order包含了某一个订单的所有信息:</p>
@@ -133,20 +167,53 @@ Payload就是代表这个请求的字符串, 通过组合HTTP方法, 请求地�
     </tr>
     <tr>
       <td>OrderBook</td>
-      <td><pre><code>{"asks": [...],"bids": [...]}</code></pre></td>
+      <td>
+        <pre>
+          <code>{"asks": [...],"bids": [...]}</code>
+        </pre>
+      </td>
       <td><p>OrderBook包含了当前市场的挂单信息:</p><p>asks: 卖单列表</p><p>bids: 买单列表</p></td>
     </tr>
     <tr>
       <td>Ticker</td>
-      <td><pre><code>{"market_code":"ethcny","low":"3000.0","high":"3000.0","last":"3000.0","volume":"0.11","open":"3000.0","timestamp":1398410899}</code></pre></td>
-      <td><p>最新成交价</p></td>
+      <td>
+        <pre>
+          <code>
+            {
+              "market_code":"ethcny",
+              "low":"3000.0",
+              "high":"3000.0",
+              "last":"3000.0",
+              "volume":"0.11",
+              "open":"3000.0",
+              "timestamp":1398410899
+            }
+          </code>
+        </pre>
+      </td>
+      <td>
+        <p>最新成交价</p>
+      </td>
     </tr>
   </tbody>
 </table>
 
 ### 一些例子
 
-以40000CNY的价格买入1BTC: curl -X POST 'https://api.ocx.com/api/v2/orders' -d 'access\_key=your\_access\_key&tonce=1234567&signature=computed\_signature&market=btccny&price=40000&side=buy&volume=1' 同时创建多个委托: curl -X POST 'https://api.ocx.com/api/v2/orders/multi' -d 'access\_key=your\_access\_key&tonce=123456789&signature=computed\_signature&market=btccny&orders\[\]\[price\]=40000&orders\[\]\[side\]=sell&orders\[\]\[volume\]=0.5&orders\[\]\[price\]=39999&orders\[\]\[side\]=sell&orders\[\]\[volume\]=0.99'
+以40000CNY的价格买入1BTC: 
+<pre>
+  <code>
+  curl -X POST 'https://api.ocx.com/api/v2/orders' -d 'access\_key=your\_access\_key&tonce=1234567&signature=computed\_signature&market=btccny&price=40000&side=buy&volume=1' 
+  </code>
+</pre>  
+
+同时创建多个委托: 
+<pre>
+  <code>
+  curl -X POST 'https://api.ocx.com/api/v2/orders/multi' -d 'access\_key=your\_access\_key&tonce=123456789&signature=computed\_signature&market=btccny&orders\[\]\[price\]=40000&orders\[\]\[side\]=sell&orders\[\]\[volume\]=0.5&orders\[\]\[price\]=39999&orders\[\]\[side\]=sell&orders\[\]\[volume\]=0.99'
+  </code>
+</pre>  
+
 
 ### 注意事项
 
