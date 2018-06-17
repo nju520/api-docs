@@ -169,7 +169,9 @@ Payload就是代表这个请求的字符串, 通过组合HTTP方法, 请求地�
       <td>OrderBook</td>
       <td>
         <pre>
-          <code>{"asks": [...],"bids": [...]}</code>
+          <code>
+{"asks": [...],"bids": [...]}
+          </code>
         </pre>
       </td>
       <td><p>OrderBook包含了当前市场的挂单信息:</p><p>asks: 卖单列表</p><p>bids: 买单列表</p></td>
@@ -371,4 +373,22 @@ URL `https://api.ocx.com/api/v2/orders/clear`
 POST https://api.ocx.com/api/v2/orders/clear
 # Response
 {"result":true}
+```
+
+9. GET /api/v2/acounts  个人资产
+
+URL `https://api.ocx.com/api/v2/accounts`
+
+示例
+```
+# Request
+POST https://api.ocx.com/api/v2/accounts
+# Response
+data: [
+  {
+    "currency":"btc",
+    "balance":"1.30",
+    "locked":"0.0"
+  }
+]
 ```
