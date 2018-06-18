@@ -22,11 +22,11 @@ OCX开发者接口包含两类API: Public API是不需要任何验证就可以�
     </tr>
     <tr>
       <td>无限制</td>
-      <td>对于每个用户, 最多600个请求每5分钟(平均2个请求/秒); 如果有更高需求可以联系OCX管理员</td>
+      <td>对于每个用户, 最多1200个请求每5分钟(平均4个请求/秒); 如果有更高需求可以联系OCX管理员</td>
     </tr>
     <tr>
       <td>无需准备立即可用</td>
-      <td>先要向OCX管理员申请access/secret key</td>
+      <td>自己在管理中心创建API Token(access_key/secret_key)</td>
     </tr>
   </tbody>
 </table>
@@ -51,29 +51,29 @@ OCX开发者接口包含两类API: Public API是不需要任何验证就可以�
 
 签名的生成很简单，先把请求表示为一个字符串, 然后对这个字符串做hash: 
 <pre>
-  hash = HMAC-SHA256(payload, secret\_key).to\_hex 
+  hash = HMAC-SHA256(payload, secret_key).to_hex 
 </pre>
 
 Payload就是代表这个请求的字符串, 通过组合HTTP方法, 请求地址和请求参数得到: 
 <pre><code>
-  # canonical\_verb是HTTP方法，例如GET 
-  # canonical\_uri是请求地址， 例如/api/v2/markets 
-  # canonical\_query是请求参数通过&连接而成的字符串，参数包括access\_key和tonce, 参数必须按照字母序排列，例如access\_key=xxx&foo=bar&tonce=123456789 
+  # canonical_verb是HTTP方法，例如GET 
+  # canonical_uri是请求地址， 例如/api/v2/markets 
+  # canonical_query是请求参数通过&连接而成的字符串，参数包括access_key和tonce, 参数必须按照字母序排列，例如access_key=xxx&foo=bar&tonce=123456789 
   # 最后再把这三个字符串通过'|'字符连接起来，看起来就像这样: 
-  # GET|/api/v2/markets|access\_key=xxx&foo=bar&tonce=123456789 
+  # GET|/api/v2/markets|access_key=xxx&foo=bar&tonce=123456789 
   def payload 
-    "#{canonical\_verb}|#{canonical\_uri}|#{canonical\_query}" 
+    "#{canonical_verb}|#{canonical_uri}|#{canonical_query}" 
   end
 </code></pre>
 
 假设我的secret key是"abc", 那么使用SHA256算法对上面例子中的payload计算HMAC的结果是(以hex表示)： 
 <pre>
-  hash = HMAC-SHA256('GET|/api/v2/markets|access\_key=xxx&foo=bar&tonce=123456789', 'abc').to\_hex = 'e324059be4491ed8e528aa7b8735af1e96547fbec96db962d51feb7bf1b64dee' 
+  hash = HMAC-SHA256('GET|/api/v2/markets|access_key=xxx&foo=bar&tonce=123456789', 'abc').to_hex = 'e324059be4491ed8e528aa7b8735af1e96547fbec96db962d51feb7bf1b64dee' 
 </pre>
 
 现在我们就可以这样来使用这个签名请求(以curl为例): 
 <pre>
-  curl -X GET 'https://api.ocx.com/api/v2/markets?access\_key=xxx&foo=bar&tonce=123456789&signature=e324059be4491ed8e528aa7b8735af1e96547fbec96db962d51feb7bf1b64dee'
+  curl -X GET 'https://api.ocx.com/api/v2/markets?access_key=xxx&foo=bar&tonce=123456789&signature=e324059be4491ed8e528aa7b8735af1e96547fbec96db962d51feb7bf1b64dee'
 </pre>
 
 ### 返回结果
@@ -117,7 +117,7 @@ Payload就是代表这个请求的字符串, 通过组合HTTP方法, 请求地�
         <pre>
           <code>
 {
-  "currency":"btc",
+  "currency_code":"btc",
   "balance":"1.30",
   "locked":"0.0"
 }
@@ -126,7 +126,7 @@ Payload就是代表这个请求的字符串, 通过组合HTTP方法, 请求地�
       </td>
       <td>
         <p>Account包含了用户某一个币种账户的信息:</p>
-        <p>currency: 账户的币种, 如btc</p>
+        <p>currency_code: 账户的币种, 如btc</p>
         <p>balance: 账户余额, 不包括冻结资金</p>
         <p>locked: 冻结资金</p>
       </td>
@@ -142,7 +142,8 @@ Payload就是代表这个请求的字符串, 通过组合HTTP方法, 请求地�
   "price":"40100.0",
   "avg_price":"40100",
   "state":"wait",
-  "market":"btccny",
+  "market_code":"ethbtc",
+  "market_name":"ETH/BTC",
   "created_at":"2018-06-18T02:02:33Z",
   "volume":"100.0",
   "remaining_volume":"89.8",
@@ -182,13 +183,13 @@ Payload就是代表这个请求的字符串, 通过组合HTTP方法, 请求地�
         <pre>
           <code>
 {
-  "market_code":"ethcny",
-  "low":"3000.0",
-  "high":"3000.0",
-  "last":"3000.0",
-  "volume":"0.11",
-  "open":"3000.0",
-  "timestamp":1398410899
+    "low": "0.051",
+    "high": "0.0537",
+    "last" : "0.053",
+    "market_code" : "ethbtc",
+    "open" : "0.0517",
+    "volume" : "454.3",
+    "timestamp" : 1529275425
 }
           </code>
         </pre>
@@ -205,7 +206,7 @@ Payload就是代表这个请求的字符串, 通过组合HTTP方法, 请求地�
 以40000CNY的价格买入1BTC: 
 <pre>
   <code>
-  curl -X POST 'https://api.ocx.com/api/v2/orders' -d 'access\_key=your\_access\_key&tonce=1234567&signature=computed\_signature&market=btccny&price=40000&side=buy&volume=1' 
+  curl -X POST 'https://api.ocx.com/api/v2/orders' -d 'access_key=your_access_key&tonce=1234567&signature=computed_signature&market=btccny&price=40000&side=buy&volume=1' 
   </code>
 </pre> 
 
