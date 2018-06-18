@@ -22,7 +22,7 @@ OCX开发者接口包含两类API: Public API是不需要任何验证就可以�
     </tr>
     <tr>
       <td>无限制</td>
-      <td>对于每个用户, 最多1200个请求每5分钟(平均4个请求/秒); 如果有更高需求可以联系OCX管理员</td>
+      <td>对于每个用户, 最多600个请求每5分钟(平均4个请求/秒); 如果有更高需求可以联系OCX管理员</td>
     </tr>
     <tr>
       <td>无需准备立即可用</td>
@@ -159,7 +159,7 @@ Payload就是代表这个请求的字符串, 通过组合HTTP方法, 请求地�
         <p>price: 出价</p>
         <p>avg_price: 平均成交价</p>
         <p>state: 订单的当前状态, wait, done或者cancel.  wait表明订单正在市场上挂单, 是一个active order, 此时订单可能部分成交或者尚未成交; done代表订单已经完全成交; cancel代表订单已经被撤销.</p>
-        <p>market: 订单参与的交易市场</p>
+        <p>market_code: 订单参与的交易市场</p>
         <p>created_at: 下单时间, ISO8601格式</p>
         <p>volume: 购买/卖出数量</p>
         <p>remaining_volume: 还未成交的数量. remaining_volume总是小于等于volume, 在订单完全成交时变成0.</p>
@@ -206,7 +206,7 @@ Payload就是代表这个请求的字符串, 通过组合HTTP方法, 请求地�
 以40000CNY的价格买入1BTC: 
 <pre>
   <code>
-  curl -X POST 'https://api.ocx.com/api/v2/orders' -d 'access_key=your_access_key&tonce=1234567&signature=computed_signature&market=btccny&price=40000&side=buy&volume=1' 
+  curl -X POST 'https://api.ocx.com/api/v2/orders' -d 'access_key=your_access_key&tonce=1234567&signature=computed_signature&market_code=btccny&price=40000&side=buy&volume=1'
   </code>
 </pre> 
 
@@ -232,8 +232,6 @@ Payload就是代表这个请求的字符串, 通过组合HTTP方法, 请求地�
 </table>
 
 ### API列表
-
-以下是详细的API列表，所有需要access_key/tonce/signature的都是Private API, 其他的则是Public API。
 
 1. GET /api/v2/tickers    获取OCX行情
 
