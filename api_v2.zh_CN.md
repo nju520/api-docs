@@ -282,7 +282,7 @@ URL `https://api.ocx.com/api/v2/depth`
 示例
 ```
 # Request
-GET https://api.ocx.com/api/v2/depth?market=ethbtc
+GET https://api.ocx.com/api/v2/depth?market_code=ethbtc
 # Response
  {
      "data" : {
@@ -292,6 +292,12 @@ GET https://api.ocx.com/api/v2/depth?market=ethbtc
      }
  }
 ```
+
+请求参数	
+
+|参数名|	参数类型|	必填|	描述|
+| :-----    | :-----   | :-----    | :-----   |
+|market_code|String|是|币对如ethbtc|
 
 4. GET /api/v2/orders  获取个人订单
 
@@ -353,6 +359,12 @@ GET https://api.ocx.com/api/v2/orders/3
 }
 ```
 
+请求参数	
+
+|参数名|	参数类型|	必填|	描述|
+| :-----    | :-----   | :-----    | :-----   |
+|id|integer|是|委托单号|
+
 6. POST /api/v2/orders 下单
 
 URL `https://api.ocx.com/api/v2/orders`
@@ -383,6 +395,15 @@ POST https://api.ocx.com/api/v2/orders/
 }
 ```
 
+请求参数	
+
+|参数名|	参数类型|	必填|	描述|
+| :-----    | :-----   | :-----    | :-----   |
+|market_code|String|是|币对如ethbtc|
+|side|String|是|买卖类型：限价单(buy/sell)|
+|price|Decimal|否|下单价格|
+|volume|Decimal|否|交易数量|
+
 7. POST /api/v2/orders/:id/cancel 撤单
 
 URL `https://api.ocx.com/api/v2/orders/:id/cancel`
@@ -394,6 +415,12 @@ POST https://api.ocx.com/api/v2/orders/cancel
 # Response
 返回已经正在撤单的订单信息
 ```
+
+请求参数	
+
+|参数名|	参数类型|	必填|	描述|
+| :-----    | :-----   | :-----    | :-----   |
+|id|integer|是|委托单号|
 
 8. POST /api/v2/orders/clear 批量撤单
 
