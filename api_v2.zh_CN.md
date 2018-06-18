@@ -73,7 +73,7 @@ Payload就是代表这个请求的字符串, 通过组合HTTP方法, 请求地�
 
 现在我们就可以这样来使用这个签名请求(以curl为例): 
 <pre>
-  curl -X GET 'https://api.ocx.com/api/v2/markets?access_key=xxx&foo=bar&tonce=123456789&signature=e324059be4491ed8e528aa7b8735af1e96547fbec96db962d51feb7bf1b64dee'
+  curl -X GET 'https://openapi.ocx.com/api/v2/markets?access_key=xxx&foo=bar&tonce=123456789&signature=e324059be4491ed8e528aa7b8735af1e96547fbec96db962d51feb7bf1b64dee'
 </pre>
 
 ### 返回结果
@@ -206,7 +206,7 @@ Payload就是代表这个请求的字符串, 通过组合HTTP方法, 请求地�
 以40000CNY的价格买入1BTC: 
 <pre>
   <code>
-  curl -X POST 'https://api.ocx.com/api/v2/orders' -d 'access_key=your_access_key&tonce=1234567&signature=computed_signature&market_code=btccny&price=40000&side=buy&volume=1'
+  curl -X POST 'https://openapi.ocx.com/api/v2/orders' -d 'access_key=your_access_key&tonce=1234567&signature=computed_signature&market_code=btccny&price=40000&side=buy&volume=1'
   </code>
 </pre> 
 
@@ -235,12 +235,12 @@ Payload就是代表这个请求的字符串, 通过组合HTTP方法, 请求地�
 
 1. GET /api/v2/tickers    获取OCX行情
 
-URL `https://api.ocx.com/api/v2/tickers`
+URL `https://openapi.ocx.com/api/v2/tickers`
 
 示例
 ```
 # Request
-GET https://api.ocx.com/api/v2/tickers
+GET https://openapi.ocx.com/api/v2/tickers
 # Response
 {
     "data": [{
@@ -257,12 +257,12 @@ GET https://api.ocx.com/api/v2/tickers
 
 2. GET /api/v2/markets  获取可交易市场
 
-URL `https://api.ocx.com/api/v2/markets`
+URL `https://openapi.ocx.com/api/v2/markets`
 
 示例
 ```
 # Request
-GET https://api.ocx.com/api/v2/markets
+GET https://openapi.ocx.com/api/v2/markets
 # Response
  {
      "data" : [{
@@ -276,12 +276,12 @@ GET https://api.ocx.com/api/v2/markets
 
 3. GET /api/v2/depth  获取市场深度
 
-URL `https://api.ocx.com/api/v2/depth`
+URL `https://openapi.ocx.com/api/v2/depth`
 
 示例
 ```
 # Request
-GET https://api.ocx.com/api/v2/depth?market_code=ethbtc
+GET https://openapi.ocx.com/api/v2/depth?market_code=ethbtc
 # Response
  {
      "data" : {
@@ -300,12 +300,12 @@ GET https://api.ocx.com/api/v2/depth?market_code=ethbtc
 
 4. GET /api/v2/orders  获取个人订单
 
-URL `https://api.ocx.com/api/v2/orders`
+URL `https://openapi.ocx.com/api/v2/orders`
 
 示例
 ```
 # Request
-GET https://api.ocx.com/api/v2/orders
+GET https://openapi.ocx.com/api/v2/orders
 # Response
 {
     "data": [{
@@ -330,12 +330,12 @@ GET https://api.ocx.com/api/v2/orders
 
 5. GET /api/v2/orders/:id 获取订单详情
 
-URL `https://api.ocx.com/api/v2/orders/:id`
+URL `https://openapi.ocx.com/api/v2/orders/:id`
 
 示例
 ```
 # Request
-GET https://api.ocx.com/api/v2/orders/3
+GET https://openapi.ocx.com/api/v2/orders/3
 # Response
 {
     "data": {
@@ -366,12 +366,12 @@ GET https://api.ocx.com/api/v2/orders/3
 
 6. POST /api/v2/orders 下单
 
-URL `https://api.ocx.com/api/v2/orders`
+URL `https://openapi.ocx.com/api/v2/orders`
 
 示例
 ```
 # Request
-POST https://api.ocx.com/api/v2/orders/
+POST https://openapi.ocx.com/api/v2/orders/
 # Response
 {
     "data": {
@@ -405,12 +405,12 @@ POST https://api.ocx.com/api/v2/orders/
 
 7. POST /api/v2/orders/:id/cancel 撤单
 
-URL `https://api.ocx.com/api/v2/orders/:id/cancel`
+URL `https://openapi.ocx.com/api/v2/orders/:id/cancel`
 
 示例
 ```
 # Request
-POST https://api.ocx.com/api/v2/orders/cancel
+POST https://openapi.ocx.com/api/v2/orders/cancel
 # Response
 返回已经正在撤单的订单信息
 ```
@@ -423,24 +423,24 @@ POST https://api.ocx.com/api/v2/orders/cancel
 
 8. POST /api/v2/orders/clear 批量撤单
 
-URL `https://api.ocx.com/api/v2/orders/clear`
+URL `https://openapi.ocx.com/api/v2/orders/clear`
 
 示例
 ```
 # Request
-POST https://api.ocx.com/api/v2/orders/clear
+POST https://openapi.ocx.com/api/v2/orders/clear
 # Response
 返回已经正在撤单的订单信息
 ```
 
 9. GET /api/v2/acounts  个人资产
 
-URL `https://api.ocx.com/api/v2/accounts`
+URL `https://openapi.ocx.com/api/v2/accounts`
 
 示例
 ```
 # Request
-GET https://api.ocx.com/api/v2/accounts
+GET https://openapi.ocx.com/api/v2/accounts
 # Response
 {
     "data" : [{
