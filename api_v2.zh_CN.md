@@ -72,7 +72,7 @@ end
 假设我的secret key是"abc", 那么使用SHA256算法对上面例子中的payload计算HMAC的结果是(以hex表示)：
 
 ~~~ruby
-  hash = HMAC-SHA256('GET|/api/v2/markets|access_key=xxx&foo=bar&tonce=123456789', 'abc').to_hex = 'e324059be4491ed8e528aa7b8735af1e96547fbec96db962d51feb7bf1b64dee' 
+  hash = HMAC-SHA256('GET|/api/v2/markets|access_key=xxx&foo=bar&tonce=123456789', 'abc').to_hex = '704f773b6b26772fd82bd3a8115079fb4f71d7baa1aad6b2922e99b17ed95cdc' 
 ~~~
 
 
@@ -83,7 +83,7 @@ end
 secret = 'abc'
 string_to_sign = payload 
 signature = OpenSSL::HMAC.hexdigest('sha256', secret, string_to_sign)
-# => e324059be4491ed8e528aa7b8735af1e96547fbec96db962d51feb7bf1b64dee
+# => 704f773b6b26772fd82bd3a8115079fb4f71d7baa1aad6b2922e99b17ed95cdc
 ~~~
 
 
@@ -91,7 +91,7 @@ signature = OpenSSL::HMAC.hexdigest('sha256', secret, string_to_sign)
 现在我们就可以这样来使用这个签名请求(以curl为例):
 
 ~~~shell
-curl -X GET 'https://openapi.ocx.com/api/v2/markets?access_key=xxx&foo=bar&tonce=123456789&signature=e324059be4491ed8e528aa7b8735af1e96547fbec96db962d51feb7bf1b64dee'
+curl -X GET 'https://openapi.ocx.com/api/v2/markets?access_key=xxx&foo=bar&tonce=123456789&signature=704f773b6b26772fd82bd3a8115079fb4f71d7baa1aad6b2922e99b17ed95cdc'
 ~~~
 
 
@@ -486,7 +486,7 @@ POST https://openapi.ocx.com/api/v2/orders/clear
 
 **取消你所有的挂单. 取消挂单是一个异步操作, api成功返回代表取消请求已经提交,服务器正在处理. api返回的结果是你当前挂单的集合,结果中的订单不一定处于取消状态.**
 
-9. `GET /api/v2/acounts`  个人资产
+9. `GET /api/v2/accounts`  个人资产
 
 * URL `https://openapi.ocx.com/api/v2/accounts`
 * 请求示例
